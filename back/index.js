@@ -12,9 +12,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
-const allUsers = prisma.user.findMany().then(console.log).catch(console.error)
+const {prisma} = require('./db/db.js');
 
 app.use('/posts', postRouter);
 app.use('/images', express.static('images'));

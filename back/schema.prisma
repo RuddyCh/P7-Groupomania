@@ -10,7 +10,42 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
+  password  String
+  posts     Post[]
+  comments  Comment[]
+  like      UserLike[]
+}
+
+model Post {
+  id            Int      @id @default(autoincrement())
+  content       String
+  imageUrl      String?
+  userId        Int
+  user          User     @relation(fields: [userId], references: [id])
+  date          DateTime @default(now())
+  comments      Comment[]
+  userLikes     UserLike[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  date      DateTime @default(now())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model UserLike {
+  likeId    Int      @id @default(autoincrement())
+  likerId   Int
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  user      User     @relation(fields: [likerId], references: [id])
+
+  @@index([likerId], map: "UserLike_likerId_fkey")
+  @@index([postId], map: "UserLike_postId_fkey")
 }
