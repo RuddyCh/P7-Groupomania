@@ -33,9 +33,19 @@ export default {
                     })
                 })
                 .then((res) => {
-                    const token = res.token;
-                    localStorage.setItem('token', token); // store token in local storage
-                    this.$router.push('/home'); // redirect to home page
+                    this.$swal({
+                        title: 'Success!',
+                        text: 'You have successfully logged in!',
+                        icon: 'success',
+                        iconColor: '#FD2D01',
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#FD2D01'
+                    }) // Show success message
+                    .then(() => {
+                        const token = res.token; // Get token
+                        localStorage.setItem('token', token); // store token in local storage
+                        location.replace('/home'); // Redirect to home page
+                    })
                 })
                 .catch((err) => {
                     console.error(err);
@@ -98,7 +108,7 @@ import { LockClosedIcon } from '@heroicons/vue/20/solid';
                     </div>
 
                     <div class="text-sm">
-                        <a href="#" class="font-medium text-primary-default hover:text-primary-light">Forgot your password?</a>
+                        <p>New here ? <router-link to="/register" class="font-medium text-primary-default hover:text-primary-light">Create account</router-link></p>
                     </div>
                 </div>
 
@@ -108,7 +118,7 @@ import { LockClosedIcon } from '@heroicons/vue/20/solid';
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                             <LockClosedIcon class="h-5 w-5 text-primary-verydark group-hover:text-primary-default" aria-hidden="true" />
                         </span>
-                        Sign in
+                        <router-link to="/home">Sign in</router-link>
                     </button>
                 </div>
             </form>

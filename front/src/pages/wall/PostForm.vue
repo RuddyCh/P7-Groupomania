@@ -47,7 +47,6 @@ import {
 } from '@heroicons/vue/20/solid'
 
 import Avatar from '../../components/ui/Avatar.vue';
-import EmojiPicker from '../../components/ui/EmojiPicker.vue';
 
 </script>
 

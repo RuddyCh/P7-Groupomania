@@ -32,25 +32,41 @@
             .then((res) => {
                 const {email, posts} = res; // Get email and posts from response
                 this.posts = posts; // Set posts
-                this.email = email; // Set email
+                this.currentUser = email; // Set current user
             })
             .catch((err) => console.log("err :", err));
         },
         data() {
             return {
                 posts: [],
-                email: null
+                currentUser: null
             } // Return posts and email
         }
     }
 </script>
 
 <template>
-    <div v-if="email" class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 dark:bg-black">
+    <div v-if="currentUser" class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 dark:bg-black">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center pb-3">Welcome, {{currentUser}}</h1>
+            </div>
+        </div>
         <PostForm></PostForm>
         <div v-if="posts.length === 0">No posts to display. Start chatting !</div>
         <div v-for="post in posts">
-            <Card :email="post.user" :title="post.title" :content="post.content" :url="post.url" :date="post.date" :comments="post.comments" :likes="post.likes" :dislikes="post.dislikes" :id="post.id"></Card>
+            <Card 
+            :currentUser="currentUser"
+            :email="post.user.email" 
+            :content="post.content" 
+            :url="post.imageUrl" 
+            :date="post.date" 
+            :comments="post.comments" 
+            :likes="post.userLikes" 
+            :dislikes="post.userDislikes" 
+            :id="post.id"
+            >
+        </Card>
         </div>
     </div>
 </template>

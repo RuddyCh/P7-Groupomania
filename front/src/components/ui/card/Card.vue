@@ -33,18 +33,20 @@ import { url, headers } from './../../../services/fetchOptions';
                 type: Number,
                 required: true
             },
-            dislikes: {
+            id: {
                 type: Number,
                 required: true
             },
-            id: {
-                type: Number,
+            currentUser: {
+                type: String,
                 required: true
             }
         },
         data() {
             return {
                 currentComment: null,
+                admin: import.meta.env.VITE_ADMIN,
+                countOfLikes: this.likes.length,
             }
         },
         mounted() {},
@@ -86,17 +88,41 @@ import { url, headers } from './../../../services/fetchOptions';
                     this.$router.go();
                 })
                 .catch((err) => console.log("err :", err));
-            }
-        }
+            },
+            likePost(e) {
+                fetch(url + "/" + this.$props.id + "/like", {
+                    headers: {...headers, 'Content-Type': 'application/json'},
+                    method: 'POST',
+                })
+                .then((res) => {
+                    if (res.status === 200) {
+                        return res.json();
+                    } else {
+                        throw new Error('Failed to like post');
+                    }
+                })
+                .then((res) => {
+                    this.$router.go();
+                })
+                .catch((err) => console.log("err :", err));
+            },
+        },
     }
 </script>
 
 <template>
     <div class="max-w-5xl m-auto rounded overflow-hidden shadow-lg mb-4 border-secondary-default border-opacity-60 border-2">
         <div>
-            <i class="fa-solid fa-trash-can cursor-pointer text-xl text-tertiary-default hover:text-primary-default float-right m-3 hover:scale-110" @click="deletePost"></i>
+            <i v-if="currentUser === email" class="fa-solid fa-trash-can cursor-pointer text-xl text-tertiary-default hover:text-primary-default float-right m-3 hover:scale-110" @click="deletePost"></i>
             <router-link :to="`/edit/${this.$props.id}`">
-                <i class="fa-solid fa-pen-to-square cursor-pointer text-xl text-tertiary-default hover:text-primary-default float-right m-3 hover:scale-110"></i>
+            <i v-if="currentUser === email" class="fa-solid fa-pen-to-square cursor-pointer text-xl text-tertiary-default hover:text-primary-default float-right m-3 hover:scale-110"></i>
+            </router-link>
+            <i v-if="currentUser === admin"
+                class="fa-solid fa-trash-can cursor-pointer text-xl text-tertiary-default hover:text-primary-default float-right m-3 hover:scale-110"
+                @click="deletePost"></i>
+            <router-link :to="`/edit/${this.$props.id}`">
+            <i v-if="currentUser === admin"
+                    class="fa-solid fa-pen-to-square cursor-pointer text-xl text-tertiary-default hover:text-primary-default float-right m-3 hover:scale-110"></i>
             </router-link>
         </div>
         <Avatar></Avatar>
@@ -120,17 +146,13 @@ import { url, headers } from './../../../services/fetchOptions';
             </div>
         </div>
         <div class="like-buttons flex justify-center">
-            <div class="likes mr-8 mb-4">
+            <div @click="likePost" class="likes mr-8 mb-4">
                 <i class="fa-solid fa-thumbs-up mr-2 cursor-pointer text-lg text-emerald-500 hover:scale-125"></i>
-                <span>{{likes}}</span>
-            </div>
-            <div class="dislikes">
-                <i class="fa-solid fa-thumbs-down mr-2 cursor-pointer text-lg text-primary-verydark hover:scale-125"></i>
-                <span>{{dislikes}}</span>
+                <span>{{countOfLikes}}</span>
             </div>
         </div>
         <div v-for="comment in comments" >
-        <Comment :email="comment.user" :content="comment.content"></Comment>
+        <Comment :email="comment.user.email" :content="comment.content"></Comment>
         </div>
         
         <div class="flex items-start space-x-2 pl-6 pb-6 sm:pr-10 pr-4">
