@@ -12,7 +12,8 @@ Prendre les fichiers .env dans le livrable "Chabrat_Ruddy_2_env_082022" et les m
 1. 'git clone' this repo
 2. 'npm install'
 3. This repo was tested with an online Planetscale MySQL database
-4. 'npm run dev' for serv backend
+4. Don't forget add the ".env" file in "back" folder
+5. 'npm run dev' for serv backend
 
 ### How to use Prisma to interact with the DB
 
@@ -32,4 +33,5 @@ If you want to change it, you have to run 'npx prisma db push'
 ### Comment utiliser
 
 1. 'npm install'
-2. 'npm run dev' for serv frontend
+2. Don't forget add the ".env" file in "front" folder
+3. 'npm run dev' for serv frontend

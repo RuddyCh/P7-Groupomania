@@ -14,7 +14,8 @@ Ceci est le Backend du projet Groupomania
 
 1. 'git clone' this repo
 2. 'npm install'
-3. This repo was tested with an online Planetscale MySQL database
+3. Don't forget add the ".env" file in "back" folder
+4. This repo was tested with an online Planetscale MySQL database
 
 ### How to use Prisma to interact with the DB
 
