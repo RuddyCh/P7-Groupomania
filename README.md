@@ -1,3 +1,4 @@
+Prendre les fichiers .env dans le livrable "Chabrat_Ruddy_2_env_082022" et les mettres dans les dossier front et back correspondant.
 ## Groupomania P7 Backend
 
 ### Technologies utilisées
@@ -10,9 +11,8 @@
 
 1. 'git clone' this repo
 2. 'npm install'
-3. Rename the ".env development" file into ".env"
-4. This repo was tested with an online Planetscale MySQL database
-5. 'npm run dev' for serv backend
+3. This repo was tested with an online Planetscale MySQL database
+4. 'npm run dev' for serv backend
 
 ### How to use Prisma to interact with the DB
 
