@@ -45,7 +45,4 @@ model UserLike {
   postId    Int
   post      Post     @relation(fields: [postId], references: [id])
   user      User     @relation(fields: [likerId], references: [id])
-
-  @@index([likerId], map: "UserLike_likerId_fkey")
-  @@index([postId], map: "UserLike_postId_fkey")
 }
