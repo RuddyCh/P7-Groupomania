@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const {logUser, signupUser} = require('./controllers/users.js');
 const {postRouter} = require('./routes/posts.js');
+const helmet = require("helmet");
 
 app.use(cors());
 
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 
 const {prisma} = require('./db/db.js');
 
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use('/posts', postRouter);
 app.use('/images', express.static('images'));
 
