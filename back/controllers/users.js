@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { users, prisma } = require('../db/db.js');
+const { prisma } = require('../db/db.js');
 const bcrypt = require('bcrypt');
 
 async function logUser(req, res) {
